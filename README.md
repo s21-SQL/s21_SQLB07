@@ -1,33 +1,42 @@
-# Day 05 — SQL Bootcamp
 
 ## _I improved my SQL Query! Please, provide proof!_
 
-Resume: Today you will see how and when to create database indexes
+In this project, you will master advanced techniques for working with PostgreSQL indexes: you will learn how to create different types of indexes, analyze queries, and optimize them so that everything runs as fast as possible.
+
+These skills will come in handy when you need to speed up slow reports, reduce server load, ensure data uniqueness (for example, to prevent having two pizzas with the same name in one restaurant), or simply make sure that your application’s users don’t wait an extra second when an instant response is possible.
+
 
 💡 [Tap here](https://new.oprosso.net/p/4cb31ec3f47a4596bc758ea1861fb624) **to leave your feedback on the project**. It's anonymous and will help our team make your educational experience better. We recommend completing the survey immediately after the project.
 
 ## Contents
 
-1. [Chapter I](#chapter-i) \
-    1.1. [Preamble](#preamble)
-2. [Chapter II](#chapter-ii) \
-    2.1. [General Rules](#general-rules)
-3. [Chapter III](#chapter-iii) \
-    3.1. [Rules of the day](#rules-of-the-day)  
-4. [Chapter IV](#chapter-iv) \
-    4.1. [Exercise 00 — Let’s create indexes for every foreign key](#exercise-00-lets-create-indexes-for-every-foreign-key)  
-5. [Chapter V](#chapter-v) \
-    5.1. [Exercise 01 — How to see that index works?](#exercise-01-how-to-see-that-index-works)  
-6. [Chapter VI](#chapter-vi) \
-    6.1. [Exercise 02 — Formula is in the index. Is it Ok?](#exercise-02-formula-is-in-the-index-is-it-ok)  
-7. [Chapter VII](#chapter-vii) \
-    7.1. [Exercise 03 — Multicolumn index for our goals](#exercise-03-multicolumn-index-for-our-goals)  
-8. [Chapter VIII](#chapter-viii) \
-    8.1. [Exercise 04 — Uniqueness for data](#exercise-04-uniqueness-for-data)
-9. [Chapter IX](#chapter-ix) \
-    9.1. [Exercise 05 — Partial uniqueness for data](#exercise-05-partial-uniqueness-for-data)
-10. [Chapter X](#chapter-x) \
-    10.1. [Exercise 06 — Let’s make performance improvement](#exercise-06-lets-make-performance-improvement)
+- [How to learn at «School 21»](#how-to-learn-at-school-21)
+- [Chapter I](#chapter-i)
+- [Preamble](#preamble)
+- [Chapter II](#chapter-ii)
+- [Rules of the day](#rules-of-the-day)
+- [Chapter III](#chapter-iii)
+- [Exercise 00 — Let’s create indexes for every foreign key](#exercise-00--lets-create-indexes-for-every-foreign-key)
+- [Exercise 01 — How to see that index works?](#exercise-01--how-to-see-that-index-works)
+- [Exercise 02 — Formula is in the index. Is it Ok?](#exercise-02--formula-is-in-the-index-is-it-ok)
+- [Exercise 03 — Multicolumn index for our goals](#exercise-03--multicolumn-index-for-our-goals)
+- [Exercise 04 — Uniqueness for data](#exercise-04--uniqueness-for-data)
+- [Exercise 05 — Partial uniqueness for data](#exercise-05--partial-uniqueness-for-data)
+- [Exercise 06 — Let’s make performance improvement](#exercise-06--lets-make-performance-improvement)
+
+
+## How to learn at «School 21»
+1. «School 21» might feel different from your previous educational experiences. It emphasizes high autonomy: you’re given a task, and you must complete it. Throughout the course, you are expected to delve deeper into the subject and solve problems. Use all available means to find information—the resources of the internet are limitless. Be mindful of your sources (for example, if you use AI tools): verify, think, analyze, and compare.
+2. You will need to present your solution to other students and receive feedback from them. Peer-to-peer (P2P) learning is a process where students exchange knowledge and experience, simultaneously acting as both mentors and learners. This way you can learn not only from materials but also from each other.
+3. Don’t hesitate to ask for help: around you are peers who are also navigating this path for the first time. Likewise, don’t be afraid to respond to requests for help—your experience is valuable and useful, so share it openly with others. Join RocketChat to stay updated with the latest community announcements.
+4. Your learning will be meaningless if you simply copy others’ solutions. If you receive help, always make sure you fully understand the why, how, and purpose behind it. Don’t be afraid to make mistakes.
+5. If you’re stuck on something and feel like you’ve tried everything but still don’t know what to do—just take a break! Believe it or not, this advice has helped many professionals in their work. Step away, clear your mind, and the right solution might just come to you next time!
+6. The learning process is just as important as the result. It’s not just about solving the task—it’s about understanding how to solve it.
+
+How to work with the project: 
+1. Before starting, clone the project from GitLab into a repository of the same name.
+2. All code files must be created in the src/ folder of the cloned repository.
+3. After cloning, create a develop branch and push changes to it in GitLab. Push to GitLab in the develop branch as well.
 
 ## Chapter I
 ## Preamble
@@ -44,30 +53,18 @@ Let me explain the reason why index exists but is not used.
 | ![D05_03](misc/images/D05_03.png) | But why... does the index not work? There are several reasons to be honest, but the main one is based on the total number of rows of the indexed table. Please take a look at a picture, I have drawn a bold blue line and this is a path for search algorithms. As you can see, linear time at the beginning is most appropriate for algorithms instead of using logarithmic search. How do you find this intersection? Basically, I can recommend experiments, benchmarks, and ... your intuition. No formulas at all. Therefore, if you want to compare the results of your searches, you sometimes have to explicitly disable sequential scanning. For example, there is a special command set enable_seqscan =off in PostgreSQL. |
 
 
-
-
 ## Chapter II
-## General Rules
-
-- Use this page as your only reference. Do not listen to rumors and speculations about how to prepare your solution.
-- Make sure you are using the latest version of PostgreSQL.
-- It is perfectly fine if you use the IDE to write source code (aka SQL script).
-- To be evaluated, your solution must be in your GIT repository.
-- Your solutions will be evaluated by your peers.
-- You should not leave any files in your directory other than those explicitly specified by the exercise instructions. It is recommended that you modify your `.gitignore` to avoid accidents.
-- Got a question? Ask your neighbor to the right. Otherwise, try your neighbor on the left.
-- Your reference manual: mates / Internet / Google. 
-- Read the examples carefully. You may need things not specified in the topic.
-- And may the SQL-Force be with you!
-Absolutely anything can be represented in SQL! Let's get started and have fun!
-
-## Chapter III
 ## Rules of the day
 
-- Please make sure you have your own database and access for it on your PostgreSQL cluster. 
-- Please download a [script](materials/model.sql) with Database Model here and apply the script to your database (you can use command line with psql or just run it through any IDE, for example DataGrip from JetBrains or pgAdmin from PostgreSQL community). **Our knowledge way is incremental and linear therefore please be aware all changes that you made in Day03 during exercises 07-13 should be on place (its similar like in real world , when we applied a release and need to be consistency with data for new changes).**
+- Make sure you are using the latest version of PostgreSQL.
+- It is perfectly fine if you use the IDE to write source code (aka SQL script).
+- You should not leave any files in your directory other than those explicitly specified by the exercise instructions. It is recommended that you modify your `.gitignore' to avoid accidents. 
+- Please download a [script](materials/model.sql) with Database Model here and apply the script to your database (you can use command line with psql or just run it through any IDE, for example DataGrip from JetBrains or pgAdmin from PostgreSQL community). **Our knowledge way is incremental and linear therefore please be aware all changes that you made in SQLB4_DML (Day03) during exercises 07-13 should be on place (its similar like in real world , when we applied a release and need to be consistency with data for new changes).**
 - All tasks contain a list of Allowed and Denied sections with listed database options, database types, SQL constructions etc. Please have a look at the section before you start.
-- Please take a look at the Logical View of our Database Model. 
+- And may the SQL-Force be with you!
+- Absolutely anything can be represented in SQL! Let's get started and have fun!
+
+Please take a look at the Logical View of our Database Model. 
 
 ![schema](misc/images/schema.png)
 
@@ -100,7 +97,7 @@ Absolutely anything can be represented in SQL! Let's get started and have fun!
 
 People's visit and people's order are different entities and don't contain any correlation between data. For example, a customer can be in a restaurant (just looking at the menu) and in that time place an order in another restaurant by phone or mobile application. Or another case, just be at home and again make a call with order without any visits.
 
-## Chapter IV
+## Chapter III
 ## Exercise 00 — Let’s create indexes for every foreign key
 
 | Exercise 00: Let’s create indexes for every foreign key |                                                                                                                          |
@@ -113,7 +110,6 @@ People's visit and people's order are different entities and don't contain any c
 Please create a simple BTree index for each foreign key in our database. The name pattern should match the next rule "idx_{table_name}_{column_name}". For example, the name of the BTree index for the pizzeria_id column in the `menu` table is `idx_menu_pizzeria_id`.
 
 
-## Chapter V
 ## Exercise 01 — How to see that index works?
 
 | Exercise 01: How to see that index works?|                                                                                                                          |
@@ -142,7 +138,6 @@ Please take a look at the sample output of the command.
 
 
 
-## Chapter VI
 ## Exercise 02 — Formula is in the index. Is it Ok?
 
 | Exercise 02: Formula is in the index. Is it Ok?|                                                                                                                          |
@@ -156,7 +151,6 @@ Please create a functional B-Tree index  named `idx_person_name` on the column n
 
 Write and provide any SQL with proof (`EXPLAIN ANALYZE`) that index idx_person_name works.
 
-## Chapter VII
 ## Exercise 03 — Multicolumn index for our goals
 
 | Exercise 03: Multicolumn index for our goals |                                                                                                                          |
@@ -180,7 +174,7 @@ The `EXPLAIN ANALYZE` command should return the next pattern. Please pay attenti
 
 Provide any SQL with proof (`EXPLAIN ANALYZE`) that index `idx_person_order_multi` works. 
 
-## Chapter VIII
+
 ## Exercise 04 — Uniqueness for data
 
 
@@ -194,7 +188,6 @@ Provide any SQL with proof (`EXPLAIN ANALYZE`) that index `idx_person_order_mult
 Please create a unique BTree index named `idx_menu_unique` on the `menu` table for  `pizzeria_id` and `pizza_name` columns. Write and provide any SQL with proof (`EXPLAIN ANALYZE`) that index `idx_menu_unique` works. 
 
 
-## Chapter IX
 ## Exercise 05 — Partial uniqueness for data
 
 
@@ -211,7 +204,7 @@ The `EXPLAIN ANALYZE` command should return the next pattern.
 
     Index Only Scan using idx_person_order_order_date on person_order …
 
-## Chapter X
+
 ## Exercise 06 — Let’s make performance improvement
 
 
